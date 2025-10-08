@@ -4,16 +4,30 @@ import { RootState } from "@/store";
 import { removeFavorite } from "@/store/slices/favoritesSlice";
 import { motion } from "framer-motion";
 import { Trash2 } from "lucide-react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { ConfirmDialog } from "./ConfirmationDialog";
 import { InfoMessage } from "./InfoMessage";
 
 interface FavoritesModalProps {
   onClose: () => void;
 }
 
-export function FavoritesModal({ onClose }: FavoritesModalProps) {
+export function FavoritesModal(props: FavoritesModalProps) {
+  const { onClose } = props;
   const favorites = useSelector((state: RootState) => state.favorites.items);
   const dispatch = useDispatch();
+
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [animeToDelete, setAnimeToDelete] = useState<number | null>(null);
+
+  const handleConfirmDelete = () => {
+    if (animeToDelete !== null) {
+      dispatch(removeFavorite(animeToDelete));
+      setConfirmOpen(false);
+      setAnimeToDelete(null);
+    }
+  };
 
   return (
     <motion.div
@@ -54,7 +68,10 @@ export function FavoritesModal({ onClose }: FavoritesModalProps) {
                 </p>
 
                 <button
-                  onClick={() => dispatch(removeFavorite(anime.id))}
+                  onClick={() => {
+                    setAnimeToDelete(anime.id);
+                    setConfirmOpen(true);
+                  }}
                   className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 text-white p-2 rounded-md transition-colors"
                   title="Quitar de favoritos"
                 >
@@ -73,6 +90,14 @@ export function FavoritesModal({ onClose }: FavoritesModalProps) {
             Cerrar
           </button>
         </div>
+
+        <ConfirmDialog
+          open={confirmOpen}
+          title="Eliminar favorito"
+          message="¿Estás seguro de que deseas eliminar este anime de tus favoritos?"
+          onConfirm={handleConfirmDelete}
+          onCancel={() => setConfirmOpen(false)}
+        />
       </motion.div>
     </motion.div>
   );
