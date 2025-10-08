@@ -3,7 +3,9 @@
 import { RootState } from "@/store";
 import { removeFavorite } from "@/store/slices/favoritesSlice";
 import { motion } from "framer-motion";
+import { Trash2 } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
+import { InfoMessage } from "./InfoMessage";
 
 interface FavoritesModalProps {
   onClose: () => void;
@@ -31,9 +33,7 @@ export function FavoritesModal({ onClose }: FavoritesModalProps) {
         <h2 className="text-2xl font-bold mb-4">❤️ Mis Favoritos</h2>
 
         {favorites.length === 0 ? (
-          <p className="text-gray-400 text-center">
-            Aún no tienes animes en favoritos.
-          </p>
+          <InfoMessage message="Aún no tienes animes en favoritos." />
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {favorites.map((anime) => (
@@ -55,9 +55,10 @@ export function FavoritesModal({ onClose }: FavoritesModalProps) {
 
                 <button
                   onClick={() => dispatch(removeFavorite(anime.id))}
-                  className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 text-white px-2 py-1 rounded-md text-sm"
+                  className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 text-white p-2 rounded-md transition-colors"
+                  title="Quitar de favoritos"
                 >
-                  Quitar
+                  <Trash2 className="w-4 h-4" />
                 </button>
               </div>
             ))}

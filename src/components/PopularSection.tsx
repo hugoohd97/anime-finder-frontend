@@ -1,7 +1,8 @@
 "use client";
 
 import { AnimeGrid } from "./AnimeGrid";
-import Loader from "./Loader";
+import { ErrorMessage } from "./ErrorMessage";
+import { Loader } from "./Loader";
 
 interface PopularSectionProps {
   title: string;
@@ -18,7 +19,7 @@ export function PopularSection(props: PopularSectionProps) {
       <h2 className="text-xl font-semibold mb-3">{title}</h2>
 
       {loading && <Loader size="md" />}
-      {error && <p className="text-red-500">Error al cargar esta sección.</p>}
+      {error && <ErrorMessage message="Error al cargar esta sección." />}
       {!loading && !error && <AnimeGrid animes={animes} />}
     </section>
   );
