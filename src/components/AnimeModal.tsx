@@ -4,6 +4,7 @@ import { GET_ANIME_DETAIL } from "@/graphql/queries";
 import { useQuery } from "@apollo/client/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { AnimeDetailContent } from "./AnimeDetailContent";
+import Loader from "./Loader";
 
 interface AnimeDetailData {
   Media: any;
@@ -38,7 +39,7 @@ export function AnimeModal(props: AnimeModalProps) {
           exit={{ scale: 0.8 }}
           onClick={(e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation()}
         >
-          {loading && <p className="text-center">Cargando detalles...</p>}
+          {loading && <Loader size="md" />}
           {error && <p className="text-red-500">Error al cargar el anime.</p>}
 
           {anime && <AnimeDetailContent anime={anime} onClose={onClose} />}
