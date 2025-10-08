@@ -21,11 +21,9 @@ interface AnimeDetailProps {
   onClose: () => void;
 }
 
-export function AnimeDetailContent(props: AnimeDetailProps) {
-  const { anime, onClose } = props;
+export function AnimeDetailContent({ anime, onClose }: AnimeDetailProps) {
   const dispatch = useDispatch();
   const favorites = useSelector((state: RootState) => state.favorites.items);
-
   const isFavorite = favorites.some((fav) => fav.id === anime.id);
 
   const handleToggleFavorite = () => {
@@ -36,7 +34,7 @@ export function AnimeDetailContent(props: AnimeDetailProps) {
         addFavorite({
           id: anime.id,
           title: anime.title,
-          coverImage: anime.coverImage!,
+          coverImage: anime.coverImage ?? { large: "" },
           averageScore: anime.averageScore ?? null,
         })
       );
@@ -65,26 +63,24 @@ export function AnimeDetailContent(props: AnimeDetailProps) {
 
       <h3 className="text-lg font-semibold mb-2">📊 Información general</h3>
       <div className="grid grid-cols-2 gap-3 text-sm text-gray-400 mb-3">
-        <p>{`⭐ Puntuación promedio: ${anime.averageScore ?? "N/A"}`}</p>
-        <p>{`📺 Episodios: ${anime.episodes ?? "?"}`}</p>
-        <p>{`📅 Estado: ${anime.status}`}</p>
+        <p>⭐ Puntuación promedio: {anime.averageScore ?? "N/A"}</p>
+        <p>📺 Episodios: {anime.episodes ?? "?"}</p>
+        <p>📅 Estado: {anime.status}</p>
         <p>
-          {`🕒 Inicio: ${
-            anime.startDate?.year
-              ? `${anime.startDate.year}-${anime.startDate.month ?? "?"}-${
-                  anime.startDate.day ?? "?"
-                }`
-              : "?"
-          }`}
+          🕒 Inicio:{" "}
+          {anime.startDate?.year
+            ? `${anime.startDate.year}-${anime.startDate.month ?? "?"}-${
+                anime.startDate.day ?? "?"
+              }`
+            : "?"}
         </p>
         <p>
-          {`📆 Finalización: ${
-            anime.endDate?.year
-              ? `${anime.endDate.year}-${anime.endDate.month ?? "?"}-${
-                  anime.endDate.day ?? "?"
-                }`
-              : "En emisión"
-          }`}
+          📆 Finalización:{" "}
+          {anime.endDate?.year
+            ? `${anime.endDate.year}-${anime.endDate.month ?? "?"}-${
+                anime.endDate.day ?? "?"
+              }`
+            : "En emisión"}
         </p>
       </div>
 
