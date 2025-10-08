@@ -1,0 +1,8 @@
+export const MEDIA_SEASONS = ["WINTER", "SPRING", "SUMMER", "FALL"];
+export const MEDIA_STATUSES = [
+  "FINISHED",
+  "RELEASING",
+  "NOT_YET_RELEASED",
+  "CANCELLED",
+  "HIATUS",
+];
