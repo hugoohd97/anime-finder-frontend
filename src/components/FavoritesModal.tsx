@@ -1,0 +1,78 @@
+"use client";
+
+import { RootState } from "@/store";
+import { removeFavorite } from "@/store/slices/favoritesSlice";
+import { motion } from "framer-motion";
+import { useDispatch, useSelector } from "react-redux";
+
+interface FavoritesModalProps {
+  onClose: () => void;
+}
+
+export function FavoritesModal({ onClose }: FavoritesModalProps) {
+  const favorites = useSelector((state: RootState) => state.favorites.items);
+  const dispatch = useDispatch();
+
+  return (
+    <motion.div
+      className="fixed inset-0 bg-black/70 flex justify-center items-center z-50"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      onClick={onClose}
+    >
+      <motion.div
+        className="bg-gray-900 rounded-xl p-6 max-w-4xl w-full relative text-white overflow-y-auto max-h-[90vh]"
+        initial={{ scale: 0.8 }}
+        animate={{ scale: 1 }}
+        exit={{ scale: 0.8 }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <h2 className="text-2xl font-bold mb-4">❤️ Mis Favoritos</h2>
+
+        {favorites.length === 0 ? (
+          <p className="text-gray-400 text-center">
+            Aún no tienes animes en favoritos.
+          </p>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            {favorites.map((anime) => (
+              <div
+                key={anime.id}
+                className="bg-gray-800 rounded-lg p-4 shadow relative hover:scale-105 transition-transform duration-200"
+              >
+                <img
+                  src={anime.coverImage.large}
+                  alt={anime.title.english || anime.title.native}
+                  className="rounded-md mb-2"
+                />
+                <h2 className="text-white font-semibold">
+                  {anime.title.english || anime.title.native}
+                </h2>
+                <p className="text-gray-400 text-sm">
+                  ⭐ {anime.averageScore ?? "N/A"}
+                </p>
+
+                <button
+                  onClick={() => dispatch(removeFavorite(anime.id))}
+                  className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 text-white px-2 py-1 rounded-md text-sm"
+                >
+                  Quitar
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+
+        <div className="mt-6 text-center">
+          <button
+            onClick={onClose}
+            className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md transition-colors"
+          >
+            Cerrar
+          </button>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}
