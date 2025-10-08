@@ -1,6 +1,7 @@
 "use client";
 
 import { AnimeGrid } from "./AnimeGrid";
+import Loader from "./Loader";
 
 interface FilteredResultsProps {
   loading: boolean;
@@ -12,7 +13,7 @@ export function FilteredResults(props: FilteredResultsProps) {
   const { loading, error, animes } = props;
 
   if (loading) {
-    return <p className="text-center mt-10">Cargando resultados...</p>;
+    return <Loader size="md" />;
   }
 
   if (error) {
