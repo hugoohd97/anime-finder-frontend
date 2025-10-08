@@ -1,7 +1,8 @@
 "use client";
 
 import { AnimeGrid } from "./AnimeGrid";
-import Loader from "./Loader";
+import { ErrorMessage } from "./ErrorMessage";
+import { Loader } from "./Loader";
 
 interface FilteredResultsProps {
   loading: boolean;
@@ -17,11 +18,7 @@ export function FilteredResults(props: FilteredResultsProps) {
   }
 
   if (error) {
-    return (
-      <p className="text-center mt-10 text-red-500">
-        Error al cargar resultados.
-      </p>
-    );
+    return <ErrorMessage message="Error al cargar resultados." />;
   }
 
   return <AnimeGrid animes={animes} />;

@@ -5,7 +5,8 @@ interface LoaderProps {
   size?: "sm" | "md" | "lg";
 }
 
-export default function Loader({ size = "md" }: LoaderProps) {
+export function Loader(props: LoaderProps) {
+  const { size = "md" } = props;
   const sizes = {
     sm: "w-6 h-6 border-2",
     md: "w-12 h-12 border-4",

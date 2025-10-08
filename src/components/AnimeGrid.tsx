@@ -1,6 +1,7 @@
 "use client";
 
 import { AnimeCard } from "./AnimeCard";
+import { InfoMessage } from "./InfoMessage";
 
 interface Anime {
   id: number;
@@ -18,9 +19,7 @@ export function AnimeGrid(props: AnimeGridProps) {
 
   if (!animes.length) {
     return (
-      <p className="text-center mt-10 text-gray-400">
-        No se encontraron resultados con los filtros seleccionados.
-      </p>
+      <InfoMessage message="No se encontraron resultados con los filtros seleccionados." />
     );
   }
 
