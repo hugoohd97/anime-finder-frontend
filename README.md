@@ -4,6 +4,11 @@ Una aplicación web moderna construida con **Next.js**, **GraphQL (AniList API)*
 Permite buscar, filtrar y visualizar animes con información detallada, además de guardar favoritos de forma persistente.
 
 ---
+## 🚀 Demo de la aplicación en vercel
+
+https://anime-finder-frontend.vercel.app/
+
+---
 
 ## 📖 Descripción del proyecto
 
@@ -14,7 +19,6 @@ El usuario puede:
 - 📊 Ver los animes más populares de la temporada o de todos los tiempos.
 - ❤️ Añadir y eliminar animes de su lista de favoritos (persistente incluso tras recargar la página).
 - 🧭 Visualizar detalles completos de cada anime en un modal elegante (banner, sinopsis, puntuación, fechas, trailer, etc.).
-- 📱 Disfrutar de una experiencia responsive y fluida, con un diseño oscuro agradable.
 - ⏬ Cargar más resultados de forma progresiva mediante paginación manual (“Mostrar más”).
 
 ---
@@ -89,7 +93,6 @@ Las pruebas cubren:
 
 ```bash
 npm run build
-npm start
 ```
 El servidor se iniciará en modo producción.
 
