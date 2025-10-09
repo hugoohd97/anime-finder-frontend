@@ -47,16 +47,19 @@ describe("AnimeDetailContent", () => {
 
   it("toggle de favoritos cambia el texto del botón", () => {
     renderWithStore(
-      <AnimeDetailContent anime={mockAnime as any} onClose={() => {}} />
+      <AnimeDetailContent anime={mockAnime} onClose={() => {}} />
     );
 
-    const btn = screen.getByRole("button", { name: "🤍 Añadir a favoritos" });
-    fireEvent.click(btn);
+    const btnAdd = screen.getByRole("button", {
+      name: "🤍 Añadir a favoritos",
+    });
+    fireEvent.click(btnAdd);
     expect(
       screen.getByRole("button", { name: "❤️ En favoritos" })
     ).toBeInTheDocument();
 
-    fireEvent.click(screen.getByRole("button", { name: "❤️ En favoritos" }));
+    const btnRemove = screen.getByRole("button", { name: "❤️ En favoritos" });
+    fireEvent.click(btnRemove);
     expect(
       screen.getByRole("button", { name: "🤍 Añadir a favoritos" })
     ).toBeInTheDocument();

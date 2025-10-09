@@ -12,13 +12,15 @@ export interface Anime {
   episodes: number | null;
 }
 
+interface PageInfo {
+  currentPage: number;
+  hasNextPage: boolean;
+}
+
 interface GetAnimesData {
   Page: {
     media: Anime[];
-    pageInfo: {
-      currentPage: number;
-      hasNextPage: boolean;
-    };
+    pageInfo: PageInfo;
   };
 }
 
@@ -33,7 +35,6 @@ interface UseFilteredAnimesProps {
 
 export function useFilteredAnimes(props: UseFilteredAnimesProps) {
   const { search, genre, status, season, seasonYear, enabled = true } = props;
-
   const [page, setPage] = useState(1);
   const [animes, setAnimes] = useState<Anime[]>([]);
   const [hasNextPage, setHasNextPage] = useState(false);
@@ -47,8 +48,8 @@ export function useFilteredAnimes(props: UseFilteredAnimesProps) {
         perPage: 18,
         search,
         genreIn: genre ? [genre] : undefined,
-        status: status as any,
-        season: season as any,
+        status,
+        season,
         seasonYear,
         sort: ["POPULARITY_DESC"],
       },
@@ -58,39 +59,36 @@ export function useFilteredAnimes(props: UseFilteredAnimesProps) {
   );
 
   useEffect(() => {
+    if (!enabled) return;
     setPage(1);
     setAnimes([]);
     scrollRestored.current = true;
 
-    if (enabled) {
-      refetch({
-        page: 1,
-        perPage: 18,
-        search,
-        genreIn: genre ? [genre] : undefined,
-        status: status as any,
-        season: season as any,
-        seasonYear,
-        sort: ["POPULARITY_DESC"],
-      }).then((res) => {
-        const newMedia = res.data?.Page?.media ?? [];
-        setAnimes(newMedia);
-        setHasNextPage(res.data?.Page?.pageInfo?.hasNextPage ?? false);
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      });
-    }
+    refetch({
+      page: 1,
+      perPage: 18,
+      search,
+      genreIn: genre ? [genre] : undefined,
+      status,
+      season,
+      seasonYear,
+      sort: ["POPULARITY_DESC"],
+    }).then((res) => {
+      const newMedia = res.data?.Page?.media ?? [];
+      setAnimes(newMedia);
+      setHasNextPage(res.data?.Page?.pageInfo?.hasNextPage ?? false);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
   }, [search, genre, status, season, seasonYear, enabled, refetch]);
 
-  const loadMore = async () => {
+  const loadMore = async (): Promise<void> => {
     if (!hasNextPage) return;
 
     const nextPage = page + 1;
-    const more = await fetchMore({
-      variables: { page: nextPage },
-    });
+    const more = await fetchMore({ variables: { page: nextPage } });
 
-    const newMedia = more?.data?.Page?.media ?? [];
-    if (newMedia.length === 0) return;
+    const newMedia = more.data?.Page?.media ?? [];
+    if (!newMedia.length) return;
 
     setAnimes((prev) => [
       ...prev,

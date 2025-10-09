@@ -1,5 +1,6 @@
 "use client";
 
+import type { Anime } from "@/hooks/useFilteredAnimes";
 import { AnimeGrid } from "./AnimeGrid";
 import { ErrorMessage } from "./ErrorMessage";
 import { Loader } from "./Loader";
@@ -7,7 +8,7 @@ import { Loader } from "./Loader";
 interface FilteredResultsProps {
   loading: boolean;
   error?: Error;
-  animes?: any[];
+  animes?: Anime[];
   hasNextPage?: boolean;
   loadMore?: () => void;
 }
