@@ -32,14 +32,14 @@ export function FavoritesModal(props: FavoritesModalProps) {
 
   return (
     <motion.div
-      className="fixed inset-0 bg-black/70 flex justify-center items-center z-50"
+      className="fixed inset-0 bg-black/70 flex justify-center items-center z-50 m-2"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       onClick={onClose}
     >
       <motion.div
-        className="bg-gray-900 rounded-xl p-6 max-w-4xl w-full relative text-white overflow-y-auto max-h-[90vh]"
+        className="bg-gray-900 rounded-xl p-6 max-w-4xl w-full relative text-white overflow-y-auto max-h-[90vh] m-2"
         initial={{ scale: 0.8 }}
         animate={{ scale: 1 }}
         exit={{ scale: 0.8 }}
