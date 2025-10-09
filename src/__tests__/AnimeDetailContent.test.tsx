@@ -20,13 +20,13 @@ const mockAnime = {
   startDate: { year: 2002, month: 10, day: 3 },
   endDate: { year: 2007, month: 2, day: 8 },
   trailer: { id: "abc123", site: "youtube" },
-};
+} as const;
 
 function renderWithStore(
-  ui: React.ReactNode,
+  ui: React.ReactElement,
   preloadedState?: Partial<TestState>
 ) {
-  const store = configureStore<TestState>({
+  const store = configureStore({
     reducer: { favorites: favoritesReducer },
     preloadedState: preloadedState as TestState,
   });
@@ -36,7 +36,7 @@ function renderWithStore(
 describe("AnimeDetailContent", () => {
   it("renderiza título y descripción", () => {
     renderWithStore(
-      <AnimeDetailContent anime={mockAnime as any} onClose={() => {}} />
+      <AnimeDetailContent anime={mockAnime} onClose={() => {}} />
     );
 
     expect(screen.getByText("Naruto")).toBeInTheDocument();
@@ -47,16 +47,19 @@ describe("AnimeDetailContent", () => {
 
   it("toggle de favoritos cambia el texto del botón", () => {
     renderWithStore(
-      <AnimeDetailContent anime={mockAnime as any} onClose={() => {}} />
+      <AnimeDetailContent anime={mockAnime} onClose={() => {}} />
     );
 
-    const btn = screen.getByRole("button", { name: "🤍 Añadir a favoritos" });
-    fireEvent.click(btn);
+    const btnAdd = screen.getByRole("button", {
+      name: "🤍 Añadir a favoritos",
+    });
+    fireEvent.click(btnAdd);
     expect(
       screen.getByRole("button", { name: "❤️ En favoritos" })
     ).toBeInTheDocument();
 
-    fireEvent.click(screen.getByRole("button", { name: "❤️ En favoritos" }));
+    const btnRemove = screen.getByRole("button", { name: "❤️ En favoritos" });
+    fireEvent.click(btnRemove);
     expect(
       screen.getByRole("button", { name: "🤍 Añadir a favoritos" })
     ).toBeInTheDocument();

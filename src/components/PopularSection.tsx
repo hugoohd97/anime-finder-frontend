@@ -1,5 +1,6 @@
 "use client";
 
+import type { Anime } from "@/hooks/useFilteredAnimes";
 import { AnimeGrid } from "./AnimeGrid";
 import { ErrorMessage } from "./ErrorMessage";
 import { Loader } from "./Loader";
@@ -8,7 +9,7 @@ interface PopularSectionProps {
   title: string;
   loading: boolean;
   error?: Error;
-  animes?: any[];
+  animes?: Anime[];
 }
 
 export function PopularSection(props: PopularSectionProps) {

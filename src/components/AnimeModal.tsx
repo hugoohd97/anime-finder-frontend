@@ -7,8 +7,22 @@ import { AnimeDetailContent } from "./AnimeDetailContent";
 import { ErrorMessage } from "./ErrorMessage";
 import { Loader } from "./Loader";
 
+interface AnimeDetail {
+  id: number;
+  title: { english: string; native: string };
+  description: string;
+  bannerImage?: string;
+  coverImage?: { large: string };
+  averageScore?: number;
+  episodes?: number;
+  status?: string;
+  startDate?: { year?: number; month?: number; day?: number };
+  endDate?: { year?: number; month?: number; day?: number };
+  trailer?: { id?: string; site?: string };
+}
+
 interface AnimeDetailData {
-  Media: any;
+  Media: AnimeDetail;
 }
 
 interface AnimeModalProps {
