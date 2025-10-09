@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { RootState } from "@/store";
@@ -11,8 +12,8 @@ interface AnimeDetailProps {
     description: string;
     bannerImage?: string;
     coverImage?: { large: string };
-    averageScore?: number;
-    episodes?: number;
+    averageScore?: number | null;
+    episodes?: number | null;
     status?: string;
     startDate?: { year?: number; month?: number; day?: number };
     endDate?: { year?: number; month?: number; day?: number };

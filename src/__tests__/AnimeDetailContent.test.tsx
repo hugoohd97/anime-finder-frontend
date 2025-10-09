@@ -1,4 +1,5 @@
 import { AnimeDetailContent } from "@/components/AnimeDetailContent";
+import type { Anime } from "@/hooks/useFilteredAnimes";
 import favoritesReducer from "@/store/slices/favoritesSlice";
 import { configureStore } from "@reduxjs/toolkit";
 import { fireEvent, render, screen } from "@testing-library/react";
@@ -8,7 +9,15 @@ interface TestState {
   favorites: ReturnType<typeof favoritesReducer>;
 }
 
-const mockAnime = {
+const mockAnime: Anime & {
+  averageScore?: number | null;
+  description: string;
+  bannerImage?: string;
+  status?: string;
+  startDate?: { year: number; month: number; day: number };
+  endDate?: { year: number; month: number; day: number };
+  trailer?: { id: string; site: string };
+} = {
   id: 1,
   title: { english: "Naruto", native: "ナルト" },
   description: "Un ninja adolescente que busca reconocimiento.",
@@ -36,7 +45,7 @@ function renderWithStore(
 describe("AnimeDetailContent", () => {
   it("renderiza título y descripción", () => {
     renderWithStore(
-      <AnimeDetailContent anime={mockAnime as any} onClose={() => {}} />
+      <AnimeDetailContent anime={mockAnime} onClose={() => {}} />
     );
 
     expect(screen.getByText("Naruto")).toBeInTheDocument();
