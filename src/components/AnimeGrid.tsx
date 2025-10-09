@@ -8,6 +8,7 @@ interface Anime {
   title: { english: string; native: string };
   coverImage: { large: string };
   averageScore: number | null;
+  episodes: number | null;
 }
 
 interface AnimeGridProps {

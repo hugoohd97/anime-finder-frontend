@@ -26,9 +26,11 @@ export function Filters() {
     values.year;
 
   return (
-    <section className="w-full bg-gray-900/60 border border-gray-800 rounded-xl p-4 mb-6">
+    <section className="w-full bg-gray-900/60 border border-gray-800 rounded-xl p-4 mb-6 sticky top-0 z-40 backdrop-blur-md">
       <div className="flex items-center justify-between mb-3">
-        <h2 className="text-lg font-semibold">Filtros</h2>
+        <h2 className="text-xl font-semibold text-indigo-400 border-l-4 border-indigo-500 pl-3">
+          Filtros
+        </h2>
 
         {hasActiveFilters && (
           <button
@@ -40,7 +42,6 @@ export function Filters() {
           </button>
         )}
       </div>
-
       <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
         <div className="flex flex-col relative">
           <label className="text-sm text-gray-400 mb-1">Título</label>

@@ -16,7 +16,9 @@ export function PopularSection(props: PopularSectionProps) {
 
   return (
     <section>
-      <h2 className="text-xl font-semibold mb-3">{title}</h2>
+      <h2 className="text-2xl font-bold text-indigo-400 border-l-4 border-indigo-500 pl-3 mb-3">
+        {title}
+      </h2>
 
       {loading && <Loader size="md" />}
       {error && <ErrorMessage message="Error al cargar esta sección." />}
