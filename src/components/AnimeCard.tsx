@@ -9,12 +9,15 @@ interface AnimeCardProps {
     title: { english: string; native: string };
     coverImage: { large: string };
     averageScore: number | null;
+    episodes: number | null;
   };
 }
 
 export function AnimeCard(props: AnimeCardProps) {
   const { anime } = props;
   const [open, setOpen] = useState(false);
+
+  console.log(anime);
 
   return (
     <>
@@ -25,14 +28,26 @@ export function AnimeCard(props: AnimeCardProps) {
         <img
           src={anime.coverImage.large}
           alt={anime.title.english || anime.title.native}
-          className="rounded-md mb-2"
+          className="w-full h-82 object-contain bg-gray-900 rounded-md mb-2"
         />
-        <h2 className="text-white font-semibold">
-          {anime.title.english || anime.title.native}
+
+        <h2 className="text-white font-semibold leading-tight">
+          {anime.title.english}
         </h2>
-        <p className="text-gray-400 text-sm">
-          ⭐ {anime.averageScore ?? "N/A"}
-        </p>
+
+        <p className="text-gray-400 text-sm mb-2">{anime.title.native}</p>
+
+        <div className="flex items-center text-gray-300 text-sm mt-2 gap-3">
+          <div className="flex items-center gap-1">
+            <span>⭐</span>
+            <span>{anime.averageScore ?? "N/A"}</span>
+          </div>
+
+          <div className="flex items-center gap-1">
+            <span>📺</span>
+            <span>{anime.episodes ?? "N/A"}</span>
+          </div>
+        </div>
       </div>
 
       {open && <AnimeModal id={anime.id} onClose={() => setOpen(false)} />}
