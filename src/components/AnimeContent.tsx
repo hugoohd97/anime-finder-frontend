@@ -14,9 +14,11 @@ export function AnimeContent() {
     useAnimeFilters();
 
   const {
+    animes,
     loading: loadingFiltered,
     error: errorFiltered,
-    data: dataFiltered,
+    hasNextPage,
+    loadMore,
   } = useFilteredAnimes({
     search,
     genre,
@@ -43,7 +45,9 @@ export function AnimeContent() {
       <FilteredResults
         loading={loadingFiltered}
         error={errorFiltered}
-        animes={dataFiltered?.Page?.media}
+        animes={animes}
+        hasNextPage={hasNextPage}
+        loadMore={loadMore}
       />
     );
   }
@@ -56,7 +60,6 @@ export function AnimeContent() {
         error={errorSeason}
         animes={dataSeason?.Page?.media}
       />
-
       <PopularSection
         title="Popular todos los tiempos"
         loading={loadingAllTime}

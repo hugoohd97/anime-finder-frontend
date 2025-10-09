@@ -18,6 +18,10 @@ export const GET_ANIMES = gql`
     $sort: [MediaSort]
   ) {
     Page(page: $page, perPage: $perPage) {
+      pageInfo {
+        currentPage
+        hasNextPage
+      }
       media(
         type: ANIME
         isAdult: false

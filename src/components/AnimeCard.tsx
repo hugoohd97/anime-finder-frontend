@@ -17,8 +17,6 @@ export function AnimeCard(props: AnimeCardProps) {
   const { anime } = props;
   const [open, setOpen] = useState(false);
 
-  console.log(anime);
-
   return (
     <>
       <div
