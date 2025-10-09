@@ -21,7 +21,8 @@ interface AnimeDetailProps {
   onClose: () => void;
 }
 
-export function AnimeDetailContent({ anime, onClose }: AnimeDetailProps) {
+export function AnimeDetailContent(props: AnimeDetailProps) {
+  const { anime, onClose } = props;
   const dispatch = useDispatch();
   const favorites = useSelector((state: RootState) => state.favorites.items);
   const isFavorite = favorites.some((fav) => fav.id === anime.id);
