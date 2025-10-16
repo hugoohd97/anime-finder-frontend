@@ -10,6 +10,7 @@ export interface Anime {
   coverImage: { large: string };
   averageScore: number | null;
   episodes: number | null;
+  status: string | null;
 }
 
 interface PageInfo {
