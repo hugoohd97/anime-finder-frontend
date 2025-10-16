@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
+import { STATUS_TRANSLATIONS } from "@/constants/translations";
 import { RootState } from "@/store";
 import { removeFavorite } from "@/store/slices/favoritesSlice";
 import { motion } from "framer-motion";
@@ -64,9 +65,26 @@ export function FavoritesModal(props: FavoritesModalProps) {
                 <h2 className="text-white font-semibold">
                   {anime.title.english || anime.title.native}
                 </h2>
-                <p className="text-gray-400 text-sm">
-                  ⭐ {anime.averageScore ?? "N/A"}
-                </p>
+                <div className="flex items-center text-gray-300 text-sm mt-2 gap-3">
+                  <div className="flex items-center gap-1">
+                    <span>⭐</span>
+                    <span>{anime.averageScore ?? "N/A"}</span>
+                  </div>
+
+                  <div className="flex items-center gap-1">
+                    <span>📺</span>
+                    <span>{anime.episodes ?? "N/A"}</span>
+                  </div>
+
+                  <div className="flex items-center gap-1">
+                    <span>📅</span>
+                    <span>
+                      {STATUS_TRANSLATIONS[anime.status ?? ""] ||
+                        anime.status ||
+                        "Desconocido"}
+                    </span>
+                  </div>
+                </div>
 
                 <button
                   onClick={() => {

@@ -15,7 +15,7 @@ interface AnimeDetail {
   coverImage?: { large: string };
   averageScore?: number;
   episodes?: number;
-  status?: string;
+  status?: string | null;
   startDate?: { year?: number; month?: number; day?: number };
   endDate?: { year?: number; month?: number; day?: number };
   trailer?: { id?: string; site?: string };

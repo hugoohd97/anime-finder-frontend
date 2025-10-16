@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
+import { STATUS_TRANSLATIONS } from "@/constants/translations";
 import { RootState } from "@/store";
 import { addFavorite, removeFavorite } from "@/store/slices/favoritesSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,7 +15,7 @@ interface AnimeDetailProps {
     coverImage?: { large: string };
     averageScore?: number | null;
     episodes?: number | null;
-    status?: string;
+    status?: string | null;
     startDate?: { year?: number; month?: number; day?: number };
     endDate?: { year?: number; month?: number; day?: number };
     trailer?: { id?: string; site?: string };
@@ -38,6 +39,8 @@ export function AnimeDetailContent(props: AnimeDetailProps) {
           title: anime.title,
           coverImage: anime.coverImage ?? { large: "" },
           averageScore: anime.averageScore ?? null,
+          episodes: anime.episodes ?? null,
+          status: anime.status ?? null,
         })
       );
     }
@@ -67,7 +70,12 @@ export function AnimeDetailContent(props: AnimeDetailProps) {
       <div className="grid grid-cols-2 gap-3 text-sm text-gray-400 mb-3">
         <p>⭐ Puntuación promedio: {anime.averageScore ?? "N/A"}</p>
         <p>📺 Episodios: {anime.episodes ?? "?"}</p>
-        <p>📅 Estado: {anime.status}</p>
+        <p>
+          📅 Estado:{" "}
+          {STATUS_TRANSLATIONS[anime.status ?? ""] ||
+            anime.status ||
+            "Desconocido"}
+        </p>
         <p>
           🕒 Inicio:{" "}
           {anime.startDate?.year

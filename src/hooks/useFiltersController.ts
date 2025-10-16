@@ -1,5 +1,6 @@
 "use client";
 
+import { GENRE_TRANSLATIONS } from "@/constants/translations";
 import { GET_GENRES } from "@/graphql/queries";
 import { useQuery } from "@apollo/client/react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -15,7 +16,13 @@ export function useFiltersController() {
   const searchParams = useSearchParams();
 
   const { data: genresData } = useQuery<GenresData>(GET_GENRES);
-  const genres = useMemo(() => genresData?.GenreCollection ?? [], [genresData]);
+  const genres = useMemo(() => {
+    const list = genresData?.GenreCollection ?? [];
+    return list.map((genre) => ({
+      value: genre,
+      label: GENRE_TRANSLATIONS[genre] || genre,
+    }));
+  }, [genresData]);
 
   const values = {
     search: searchParams.get("search") ?? "",

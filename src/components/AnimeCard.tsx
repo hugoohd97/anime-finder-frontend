@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
+import { STATUS_TRANSLATIONS } from "@/constants/translations";
 import { useState } from "react";
 import { AnimeModal } from "./AnimeModal";
 
@@ -11,6 +12,7 @@ interface AnimeCardProps {
     coverImage: { large: string };
     averageScore: number | null;
     episodes: number | null;
+    status: string | null;
   };
 }
 
@@ -45,6 +47,15 @@ export function AnimeCard(props: AnimeCardProps) {
           <div className="flex items-center gap-1">
             <span>📺</span>
             <span>{anime.episodes ?? "N/A"}</span>
+          </div>
+
+          <div className="flex items-center gap-1">
+            <span>📅</span>
+            <span>
+              {STATUS_TRANSLATIONS[anime.status ?? ""] ||
+                anime.status ||
+                "Desconocido"}
+            </span>
           </div>
         </div>
       </div>

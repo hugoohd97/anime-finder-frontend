@@ -2,11 +2,16 @@
 
 import { XCircle } from "lucide-react";
 
+interface Options {
+  label: string;
+  value: string;
+}
+
 interface FilterSelectProps {
   label: string;
   value?: string;
   onChange: (val: string | null) => void;
-  options: string[];
+  options: string[] | Options[];
 }
 
 export function FilterSelect(props: FilterSelectProps) {
@@ -24,11 +29,16 @@ export function FilterSelect(props: FilterSelectProps) {
           onChange={(e) => onChange(e.target.value || null)}
         >
           <option value="" disabled hidden />
-          {options.map((opt) => (
-            <option key={opt} value={opt}>
-              {opt}
-            </option>
-          ))}
+          {options.map((opt) => {
+            const optionValue = typeof opt === "string" ? opt : opt.value;
+            const optionLabel = typeof opt === "string" ? opt : opt.label;
+
+            return (
+              <option key={optionValue} value={optionValue}>
+                {optionLabel}
+              </option>
+            );
+          })}
         </select>
 
         {value && (
